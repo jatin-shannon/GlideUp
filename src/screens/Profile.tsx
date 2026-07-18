@@ -2,10 +2,12 @@ import type { ProgressRecord } from '../types';
 import { UNITS, badgeLabel } from '../content';
 import { displayStreak } from '../lib/streak';
 import { todayISO } from '../lib/dates';
+import AccountSync from '../components/AccountSync';
 
 interface ProfileProps {
   progress: ProgressRecord;
   onBack: () => void;
+  onSynced: (p: ProgressRecord) => void;
 }
 
 const WEEKS = 13; // ~3 months of history
@@ -62,7 +64,7 @@ function StreakCalendar({ activeDays }: { activeDays: string[] }) {
   );
 }
 
-export default function Profile({ progress, onBack }: ProfileProps) {
+export default function Profile({ progress, onBack, onSynced }: ProfileProps) {
   const today = todayISO();
   const streak = displayStreak(progress.streak, progress.lastActiveDate, today);
 
@@ -108,6 +110,9 @@ export default function Profile({ progress, onBack }: ProfileProps) {
           </p>
         </div>
       </div>
+
+      {/* Cloud sync (renders only when configured) */}
+      <AccountSync onSynced={onSynced} />
 
       {/* Calendar */}
       <section className="mb-8">

@@ -27,3 +27,8 @@ dev-dist
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# Local environment (contains project-specific values)
+.env
+.env.local
+!.env.example

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ProgressRecord } from './types';
 import { loadProgress } from './lib/db';
+import { useCloudSync } from './lib/useCloudSync';
 import { getUnit } from './content';
 import Home from './screens/Home';
 import Lesson, { type SessionSummary } from './screens/Lesson';
@@ -20,6 +21,10 @@ export default function App() {
   useEffect(() => {
     loadProgress().then(setProgress);
   }, []);
+
+  // Cross-device sync: reconcile on foreground/online, push on blur. Merged
+  // results refresh the in-memory record. No-ops when sync is not configured.
+  useCloudSync(setProgress);
 
   if (!progress) {
     return (
@@ -74,7 +79,11 @@ export default function App() {
 
     case 'profile':
       return (
-        <Profile progress={progress} onBack={() => setView({ name: 'home' })} />
+        <Profile
+          progress={progress}
+          onBack={() => setView({ name: 'home' })}
+          onSynced={setProgress}
+        />
       );
   }
 }

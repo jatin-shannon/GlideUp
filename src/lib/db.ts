@@ -1,5 +1,5 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
-import type { Exercise, ProgressRecord, Unit } from '../types';
+import type { Exercise, ProgressRecord, Unit, UnitProgress } from '../types';
 import { todayISO } from './dates';
 import { advanceStreak } from './streak';
 import { heartsForToday, loseHeart } from './hearts';
@@ -184,6 +184,24 @@ function countCompletedInUnit(
   const ids = unitExerciseIndex[unitId];
   if (!ids) return completedExercises.length;
   return completedExercises.filter((id) => ids.has(id)).length;
+}
+
+/**
+ * Recompute per-unit progress from a completed-exercise list against every
+ * registered unit. Used after a sync merge, where the completed set changes
+ * wholesale.
+ */
+export function unitProgressFor(
+  completedExercises: string[],
+): Record<string, UnitProgress> {
+  const out: Record<string, UnitProgress> = {};
+  for (const [unitId, ids] of Object.entries(unitExerciseIndex)) {
+    out[unitId] = {
+      completed: completedExercises.filter((id) => ids.has(id)).length,
+      total: ids.size,
+    };
+  }
+  return out;
 }
 
 /**
