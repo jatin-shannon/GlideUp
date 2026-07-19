@@ -133,10 +133,6 @@ export async function recordCorrectAnswer(
     ? record.completedExercises
     : [...record.completedExercises, exercise.id];
 
-  const priorUnit = record.unitProgress[unitId] ?? {
-    completed: 0,
-    total: unitTotal,
-  };
   const completedInUnit = countCompletedInUnit(completedExercises, unitId);
   const unitProgress = {
     ...record.unitProgress,
@@ -145,7 +141,6 @@ export async function recordCorrectAnswer(
       total: unitTotal,
     },
   };
-  void priorUnit;
 
   const activeDays = record.activeDays.includes(today)
     ? record.activeDays
@@ -170,7 +165,7 @@ export async function recordCorrectAnswer(
  * namespaced by unit (e.g. `fn-001`, `gr-002`), so we match on the completed
  * set against a passed-in id list rather than string prefixes for safety.
  */
-let unitExerciseIndex: Record<string, Set<string>> = {};
+const unitExerciseIndex: Record<string, Set<string>> = {};
 
 /** Register a unit's exercise ids so unit progress can be counted accurately. */
 export function indexUnit(unit: Unit): void {

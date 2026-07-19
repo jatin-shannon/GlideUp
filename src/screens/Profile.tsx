@@ -2,6 +2,7 @@ import type { ProgressRecord } from '../types';
 import { UNITS, badgeLabel } from '../content';
 import { displayStreak } from '../lib/streak';
 import { todayISO } from '../lib/dates';
+import { resetAllProgress, loadProgress } from '../lib/db';
 import AccountSync from '../components/AccountSync';
 
 interface ProfileProps {
@@ -164,6 +165,33 @@ export default function Profile({ progress, onBack, onSynced }: ProfileProps) {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* Danger zone */}
+      <section className="mt-8">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">
+          Reset
+        </h2>
+        <div className="flex items-center justify-between rounded-2xl bg-slate-900/50 p-4 ring-1 ring-slate-800">
+          <p className="text-sm text-slate-400">
+            Clear all local progress on this device.
+          </p>
+          <button
+            onClick={async () => {
+              if (
+                !window.confirm(
+                  'Reset all progress on this device? This cannot be undone.',
+                )
+              )
+                return;
+              await resetAllProgress();
+              onSynced(await loadProgress());
+            }}
+            className="shrink-0 rounded-xl bg-rose-500/15 px-4 py-2 text-sm font-semibold text-rose-300 transition hover:bg-rose-500/25"
+          >
+            Reset progress
+          </button>
         </div>
       </section>
     </div>
