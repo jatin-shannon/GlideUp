@@ -201,6 +201,35 @@ export async function signOut(): Promise<void> {
   await supabase.auth.signOut();
 }
 
+/** Email a password-reset link. Clicking it returns to the app in recovery. */
+export async function sendPasswordReset(email: string): Promise<void> {
+  if (!supabase) throw new Error('Sync is not configured.');
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin,
+  });
+  if (error) throw error;
+}
+
+/** Set a new password for the signed-in (or recovering) user. */
+export async function updatePassword(password: string): Promise<void> {
+  if (!supabase) throw new Error('Sync is not configured.');
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) throw error;
+}
+
+/**
+ * Fires when the user arrives via a password-reset link (Supabase emits a
+ * PASSWORD_RECOVERY event once it processes the recovery token in the URL).
+ * Returns an unsubscribe function.
+ */
+export function onPasswordRecovery(cb: () => void): () => void {
+  if (!supabase) return () => {};
+  const { data } = supabase.auth.onAuthStateChange((event) => {
+    if (event === 'PASSWORD_RECOVERY') cb();
+  });
+  return () => data.subscription.unsubscribe();
+}
+
 /** Subscribe to sign-in/out; returns an unsubscribe function. */
 export function onAuthChange(cb: (user: AuthUser | null) => void): () => void {
   if (!supabase) return () => {};
