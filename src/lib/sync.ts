@@ -167,6 +167,35 @@ export async function signInWithMagicLink(email: string): Promise<void> {
   if (error) throw error;
 }
 
+/** Sign in with an existing email + password. */
+export async function signInWithPassword(
+  email: string,
+  password: string,
+): Promise<void> {
+  if (!supabase) throw new Error('Sync is not configured.');
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+}
+
+/**
+ * Create an account with email + password. If the project requires email
+ * confirmation (Supabase default), no session is returned until the user
+ * clicks the confirmation link — `needsConfirmation` says which case it is.
+ */
+export async function signUpWithPassword(
+  email: string,
+  password: string,
+): Promise<{ needsConfirmation: boolean }> {
+  if (!supabase) throw new Error('Sync is not configured.');
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { emailRedirectTo: window.location.origin },
+  });
+  if (error) throw error;
+  return { needsConfirmation: !data.session };
+}
+
 export async function signOut(): Promise<void> {
   if (!supabase) return;
   await supabase.auth.signOut();
