@@ -1,0 +1,77 @@
+{
+  "unitId": "glide-record",
+  "unitTitle": "GlideRecord",
+  "certTier": "CSA",
+  "description": "Query, insert, update, and delete records with the GlideRecord API.",
+  "exercises": [
+    {
+      "id": "gr-001",
+      "type": "assembly",
+      "prompt": "Assemble a query for all active incidents assigned to the caller.",
+      "blocks": [
+        "var gr = new GlideRecord('incident');",
+        "gr.addQuery('active', true);",
+        "gr.addQuery('caller_id', gs.getUserID());",
+        "gr.query();"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "gr-002",
+      "type": "fill-blank",
+      "prompt": "Complete the line to advance to the next record in the result set.",
+      "codeContext": "while (gr.___()) {\n  gs.info(gr.number);\n}",
+      "answer": "next",
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "gr-003",
+      "type": "multiple-choice",
+      "prompt": "Which method commits a new record to the database?",
+      "options": ["update()", "insert()", "save()", "commit()"],
+      "correctIndex": 1,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "gr-004",
+      "type": "assembly",
+      "prompt": "Assemble code that inserts a new incident with a short description.",
+      "blocks": [
+        "var gr = new GlideRecord('incident');",
+        "gr.initialize();",
+        "gr.short_description = 'Printer down';",
+        "gr.insert();"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "gr-005",
+      "type": "fill-blank",
+      "prompt": "Complete the method that loads a single record by its sys_id.",
+      "codeContext": "var gr = new GlideRecord('incident');\nif (gr.___('a1b2c3')) {\n  gs.info(gr.number);\n}",
+      "answer": "get",
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "gr-006",
+      "type": "multiple-choice",
+      "prompt": "Which method deletes all records matching the current query in one call?",
+      "options": [
+        "deleteRecord()",
+        "deleteAll()",
+        "deleteMultiple()",
+        "removeQuery()"
+      ],
+      "correctIndex": 2,
+      "xp": 5,
+      "difficulty": 2
+    }
+  ]
+}

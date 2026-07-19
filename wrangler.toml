@@ -1,0 +1,7 @@
+# Cloudflare Pages configuration.
+# Deploy manually with:  npx wrangler pages deploy dist --project-name=glideup
+# (after `wrangler login`), or let .github/workflows/deploy.yml do it on push
+# to main once the CLOUDFLARE_* secrets are set.
+name = "glideup"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-07-18"

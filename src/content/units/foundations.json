@@ -1,0 +1,77 @@
+{
+  "unitId": "foundations",
+  "unitTitle": "Foundations",
+  "certTier": "CSA",
+  "description": "JavaScript basics in the ServiceNow context — variables, functions, and the GlideSystem (gs) API.",
+  "exercises": [
+    {
+      "id": "fn-001",
+      "type": "multiple-choice",
+      "prompt": "Which GlideSystem call writes an informational message to the system log?",
+      "options": ["gs.log()", "gs.info()", "gs.print()", "gs.debug()"],
+      "correctIndex": 1,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "fn-002",
+      "type": "fill-blank",
+      "prompt": "Declare a variable named greeting holding the text \"Hello\". Fill in the keyword.",
+      "codeContext": "___ greeting = 'Hello';\ngs.info(greeting);",
+      "answer": "var",
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "fn-003",
+      "type": "assembly",
+      "prompt": "Assemble a function that logs the current user's full name.",
+      "blocks": [
+        "function logUserName() {",
+        "  var name = gs.getUserDisplayName();",
+        "  gs.info(name);",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "fn-004",
+      "type": "multiple-choice",
+      "prompt": "Which method returns the sys_id of the currently logged-in user?",
+      "options": [
+        "gs.getUser()",
+        "gs.getUserName()",
+        "gs.getUserID()",
+        "gs.currentUser()"
+      ],
+      "correctIndex": 2,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "fn-005",
+      "type": "fill-blank",
+      "prompt": "Complete the line so it only runs when the value is truthy.",
+      "codeContext": "___ (value) {\n  gs.info('has a value');\n}",
+      "answer": "if",
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "fn-006",
+      "type": "assembly",
+      "prompt": "Assemble a loop that logs each name in the names array.",
+      "blocks": [
+        "var names = ['Ada', 'Alan'];",
+        "for (var i = 0; i < names.length; i++) {",
+        "  gs.info(names[i]);",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 10,
+      "difficulty": 2
+    }
+  ]
+}
