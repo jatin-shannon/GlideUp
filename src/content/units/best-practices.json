@@ -1,0 +1,162 @@
+{
+  "unitId": "best-practices",
+  "unitTitle": "Scripting Best Practices",
+  "certTier": "CAD",
+  "description": "Write efficient, secure, and maintainable server-side code.",
+  "exercises": [
+    {
+      "id": "bp-001",
+      "type": "multiple-choice",
+      "prompt": "To limit how many records a query returns, use:",
+      "options": ["setLimit()", "setMax()", "limitRows()", "top()"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "bp-002",
+      "type": "multiple-choice",
+      "prompt": "Which call prevents business rules and workflows from running during a bulk update?",
+      "options": [
+        "setWorkflow(false)",
+        "setAbortAction(true)",
+        "setValue(false)",
+        "autoSysFields(false)"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "bp-003",
+      "type": "multiple-choice",
+      "prompt": "Which class enforces the user's ACLs during a query?",
+      "options": [
+        "GlideRecordSecure",
+        "GlideRecord",
+        "GlideAggregate",
+        "GlideSystem"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "bp-004",
+      "type": "multiple-choice",
+      "prompt": "A common performance mistake is:",
+      "options": [
+        "Running a query inside a loop (nested queries)",
+        "Using Script Includes",
+        "Adding comments",
+        "Using GlideAggregate"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "bp-005",
+      "type": "fill-blank",
+      "prompt": "Cap a query to a single record for efficiency.",
+      "codeContext": "gr.___(1);",
+      "answer": "setLimit",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "bp-006",
+      "type": "multiple-choice",
+      "prompt": "To count records efficiently, prefer:",
+      "options": [
+        "GlideAggregate over looping and getRowCount()",
+        "A client script",
+        "A UI Policy",
+        "setValue"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "bp-007",
+      "type": "multiple-choice",
+      "prompt": "Hardcoding sys_ids in scripts is discouraged because:",
+      "options": [
+        "They differ between instances and break portability",
+        "They are too long",
+        "They are case-sensitive",
+        "They expire"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "bp-008",
+      "type": "fill-blank",
+      "prompt": "Skip business rule execution before a bulk update.",
+      "codeContext": "gr.___(false);\ngr.updateMultiple();",
+      "answer": "setWorkflow",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "bp-009",
+      "type": "multiple-choice",
+      "prompt": "Excessive gs.info logging inside a large loop is bad because it:",
+      "options": [
+        "Writes a huge number of log records, hurting performance",
+        "Encrypts the data",
+        "Breaks ACLs",
+        "Sends emails"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "bp-010",
+      "type": "multiple-choice",
+      "prompt": "Wrapping reusable logic in a Script Include instead of copying code improves:",
+      "options": [
+        "Maintainability and reuse",
+        "Email delivery",
+        "Form layout",
+        "Login speed"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "bp-011",
+      "type": "assembly",
+      "prompt": "Assemble an efficient single-record lookup.",
+      "blocks": [
+        "var gr = new GlideRecord('incident');",
+        "gr.addQuery('number', 'INC0010001');",
+        "gr.setLimit(1);",
+        "gr.query();",
+        "if (gr.next()) { gs.info(gr.getValue('short_description')); }"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "bp-012",
+      "type": "multiple-choice",
+      "prompt": "Prefer gr.getValue('field') over gr.field because it:",
+      "options": [
+        "Returns a real string, avoiding object-reference bugs",
+        "Is shorter to type",
+        "Runs on the client",
+        "Bypasses ACLs"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    }
+  ]
+}
