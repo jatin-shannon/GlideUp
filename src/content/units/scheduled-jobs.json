@@ -1,0 +1,158 @@
+{
+  "unitId": "scheduled-jobs",
+  "unitTitle": "Scheduled Jobs & Events",
+  "certTier": "CAD",
+  "description": "Run code on a schedule and fire events for asynchronous work.",
+  "exercises": [
+    {
+      "id": "sj-001",
+      "type": "multiple-choice",
+      "prompt": "Which call places a custom event on the event queue?",
+      "options": [
+        "gs.eventQueue()",
+        "gs.fireEvent()",
+        "gs.addEvent()",
+        "gs.queue()"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "sj-002",
+      "type": "assembly",
+      "prompt": "Assemble a job that fires a review event for each active incident.",
+      "blocks": [
+        "var gr = new GlideRecord('incident');",
+        "gr.addActiveQuery();",
+        "gr.query();",
+        "while (gr.next()) {",
+        "  gs.eventQueue('incident.review', gr);",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4, 5],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "sj-003",
+      "type": "multiple-choice",
+      "prompt": "After the event name and record, gs.eventQueue() accepts what?",
+      "options": [
+        "Two optional string parameters (parm1, parm2)",
+        "A callback function",
+        "A date",
+        "A role name"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "sj-004",
+      "type": "fill-blank",
+      "prompt": "Create an object for the current server date and time.",
+      "codeContext": "var now = new ___();",
+      "answer": "GlideDateTime",
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "sj-005",
+      "type": "multiple-choice",
+      "prompt": "A Scheduled Script Execution runs code:",
+      "options": [
+        "On a defined schedule (e.g., daily)",
+        "When a form loads",
+        "When a field changes",
+        "On every record read"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "sj-006",
+      "type": "multiple-choice",
+      "prompt": "What can respond to an event you place on the queue?",
+      "options": [
+        "A Script Action or Notification registered to that event",
+        "A client script",
+        "A UI Policy",
+        "An ACL"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "sj-007",
+      "type": "fill-blank",
+      "prompt": "Place an event named 'x_escalation' for the current record.",
+      "codeContext": "gs.___('x_escalation', current);",
+      "answer": "eventQueue",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "sj-008",
+      "type": "multiple-choice",
+      "prompt": "How are events in ServiceNow processed?",
+      "options": [
+        "Asynchronously by the scheduler",
+        "Immediately and synchronously",
+        "Only on form save",
+        "Client-side"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "sj-009",
+      "type": "assembly",
+      "prompt": "Assemble a scheduled cleanup that deletes log entries older than 90 days.",
+      "blocks": [
+        "var gr = new GlideRecord('syslog');",
+        "gr.addQuery('sys_created_on', '<', gs.daysAgoStart(90));",
+        "gr.query();",
+        "gr.deleteMultiple();"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "sj-010",
+      "type": "multiple-choice",
+      "prompt": "To run a Script Include method on a schedule, you typically use:",
+      "options": [
+        "A Scheduled Script Execution job",
+        "A UI Action",
+        "A client script",
+        "An ACL"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "sj-011",
+      "type": "fill-blank",
+      "prompt": "Write an informational log line from a scheduled job.",
+      "codeContext": "gs.___('Job finished');",
+      "answer": "info",
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "sj-012",
+      "type": "multiple-choice",
+      "prompt": "The first argument to gs.eventQueue() is:",
+      "options": ["The event name", "The record", "The user id", "A callback"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    }
+  ]
+}

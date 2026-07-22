@@ -1,0 +1,144 @@
+{
+  "unitId": "notifications",
+  "unitTitle": "Notifications & Email",
+  "certTier": "CSA",
+  "description": "Event-driven email notifications and server-side mail scripts.",
+  "exercises": [
+    {
+      "id": "no-001",
+      "type": "multiple-choice",
+      "prompt": "An email notification can be triggered by:",
+      "options": [
+        "A record insert/update or a fired event",
+        "A client script",
+        "A UI Policy",
+        "A page load"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "no-002",
+      "type": "multiple-choice",
+      "prompt": "In a notification message, how do you insert the record's 'number' field?",
+      "options": ["${number}", "{{number}}", "%number%", "@number"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "no-003",
+      "type": "fill-blank",
+      "prompt": "In a mail script, output text into the email body.",
+      "codeContext": "template.___('Hello');",
+      "answer": "print",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "no-004",
+      "type": "multiple-choice",
+      "prompt": "Mail scripts in a notification run on which side?",
+      "options": ["Server-side", "Client-side", "In the browser", "In the database"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "no-005",
+      "type": "multiple-choice",
+      "prompt": "Which object refers to the triggering record inside a mail script?",
+      "options": ["current", "g_form", "email", "record"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "no-006",
+      "type": "assembly",
+      "prompt": "Assemble a mail script that prints the number and priority.",
+      "blocks": [
+        "template.print('Number: ' + current.number);",
+        "template.print('Priority: ' + current.priority.getDisplayValue());"
+      ],
+      "correctOrder": [0, 1],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "no-007",
+      "type": "multiple-choice",
+      "prompt": "Where are a notification's recipients configured?",
+      "options": [
+        "On the Notification record (the 'Who will receive' tab)",
+        "In a client script",
+        "In an ACL",
+        "In a UI Policy"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "no-008",
+      "type": "fill-blank",
+      "prompt": "Get the readable value of the assigned_to reference field in a mail script.",
+      "codeContext": "current.assigned_to.___()",
+      "answer": "getDisplayValue",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "no-009",
+      "type": "multiple-choice",
+      "prompt": "To send a notification only when priority is 1, you set:",
+      "options": [
+        "A condition on the notification",
+        "A client script",
+        "An ACL",
+        "A UI Action"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "no-010",
+      "type": "multiple-choice",
+      "prompt": "An 'event is fired' notification requires the event to be:",
+      "options": [
+        "Registered and placed on the queue with gs.eventQueue()",
+        "Defined in a UI Policy",
+        "Attached to a DOM listener",
+        "Sent via a REST call"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "no-011",
+      "type": "fill-blank",
+      "prompt": "Insert the short description field into the body using notification syntax.",
+      "codeContext": "Summary: ${___}",
+      "answer": "short_description",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "no-012",
+      "type": "multiple-choice",
+      "prompt": "Reusable mail scripts (Email Scripts) are stored in which table?",
+      "options": [
+        "sys_script_email",
+        "sys_script_client",
+        "sys_script (Business Rules)",
+        "sys_ui_action"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "unitId": "glide-aggregate",
+  "unitTitle": "GlideAggregate & Efficiency",
+  "certTier": "CAD",
+  "description": "Count and sum records at the database without loading them into memory.",
+  "exercises": [
+    {
+      "id": "ag-001",
+      "type": "multiple-choice",
+      "prompt": "What is GlideAggregate used for?",
+      "options": [
+        "Counting or summing records at the database without loading them",
+        "Editing records",
+        "Sending email",
+        "Client-side validation"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "ag-002",
+      "type": "assembly",
+      "prompt": "Assemble a query that counts active incidents.",
+      "blocks": [
+        "var ga = new GlideAggregate('incident');",
+        "ga.addQuery('active', true);",
+        "ga.addAggregate('COUNT');",
+        "ga.query();"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "ag-003",
+      "type": "fill-blank",
+      "prompt": "Add a COUNT aggregate to the query.",
+      "codeContext": "ga.___('COUNT');",
+      "answer": "addAggregate",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ag-004",
+      "type": "fill-blank",
+      "prompt": "Read the count after querying and calling next().",
+      "codeContext": "ga.next();\nvar count = ga.___('COUNT');",
+      "answer": "getAggregate",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ag-005",
+      "type": "multiple-choice",
+      "prompt": "Why use GlideAggregate instead of looping a GlideRecord to count?",
+      "options": [
+        "The database does the aggregation, so it's far more efficient",
+        "It can also edit records",
+        "It runs on the client",
+        "It bypasses ACLs"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ag-006",
+      "type": "multiple-choice",
+      "prompt": "Which aggregate functions does GlideAggregate support?",
+      "options": [
+        "COUNT, SUM, MIN, MAX, AVG",
+        "GET, POST",
+        "onLoad, onChange",
+        "read, write"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ag-007",
+      "type": "assembly",
+      "prompt": "Assemble a query summing business_duration grouped by priority.",
+      "blocks": [
+        "var ga = new GlideAggregate('incident');",
+        "ga.addAggregate('SUM', 'business_duration');",
+        "ga.groupBy('priority');",
+        "ga.query();"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "ag-008",
+      "type": "fill-blank",
+      "prompt": "Group the aggregated results by the 'category' field.",
+      "codeContext": "ga.___('category');",
+      "answer": "groupBy",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ag-009",
+      "type": "multiple-choice",
+      "prompt": "For counting records, GlideAggregate is preferred because it:",
+      "options": [
+        "Avoids loading each record into memory",
+        "Sends fewer emails",
+        "Runs client-side",
+        "Encrypts the data"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ag-010",
+      "type": "fill-blank",
+      "prompt": "Read the grouped field's value while iterating results.",
+      "codeContext": "while (ga.next()) {\n  var cat = ga.___('category');\n}",
+      "answer": "getValue",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ag-011",
+      "type": "multiple-choice",
+      "prompt": "A common inefficiency GlideAggregate fixes is:",
+      "options": [
+        "Loading every record just to call getRowCount()",
+        "Making fields mandatory",
+        "Redirecting URLs",
+        "Adding roles"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ag-012",
+      "type": "multiple-choice",
+      "prompt": "GlideAggregate runs on which side?",
+      "options": ["Server-side", "Client-side", "In the browser", "In email"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    }
+  ]
+}

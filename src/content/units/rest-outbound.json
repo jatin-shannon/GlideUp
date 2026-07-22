@@ -1,0 +1,142 @@
+{
+  "unitId": "rest-outbound",
+  "unitTitle": "REST Integration (Outbound)",
+  "certTier": "CIS",
+  "description": "Call external APIs from ServiceNow with RESTMessageV2.",
+  "exercises": [
+    {
+      "id": "ro-001",
+      "type": "multiple-choice",
+      "prompt": "Which class makes an outbound REST call from a server script?",
+      "options": [
+        "sn_ws.RESTMessageV2",
+        "GlideAjax",
+        "RESTMessage",
+        "GlideHTTPRequest"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ro-002",
+      "type": "assembly",
+      "prompt": "Assemble a basic outbound GET request.",
+      "blocks": [
+        "var r = new sn_ws.RESTMessageV2();",
+        "r.setEndpoint('https://api.example.com/data');",
+        "r.setHttpMethod('GET');",
+        "var response = r.execute();"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "ro-003",
+      "type": "fill-blank",
+      "prompt": "Set the target URL for the request.",
+      "codeContext": "r.___('https://api.example.com');",
+      "answer": "setEndpoint",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ro-004",
+      "type": "fill-blank",
+      "prompt": "Set the HTTP method to POST.",
+      "codeContext": "r.___('POST');",
+      "answer": "setHttpMethod",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ro-005",
+      "type": "multiple-choice",
+      "prompt": "Which method sends the request and returns a response object?",
+      "options": ["execute()", "send()", "run()", "call()"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ro-006",
+      "type": "fill-blank",
+      "prompt": "Read the response body text.",
+      "codeContext": "var body = response.___();",
+      "answer": "getBody",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ro-007",
+      "type": "multiple-choice",
+      "prompt": "How do you read the HTTP status of the response?",
+      "options": [
+        "response.getStatusCode()",
+        "response.getStatus()",
+        "response.code()",
+        "response.httpStatus()"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ro-008",
+      "type": "assembly",
+      "prompt": "Assemble a POST that sends a JSON body.",
+      "blocks": [
+        "var r = new sn_ws.RESTMessageV2();",
+        "r.setEndpoint('https://api.example.com/tickets');",
+        "r.setHttpMethod('POST');",
+        "r.setRequestBody(JSON.stringify(payload));",
+        "var response = r.execute();"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "ro-009",
+      "type": "fill-blank",
+      "prompt": "Attach a JSON string as the request body.",
+      "codeContext": "r.___(JSON.stringify(payload));",
+      "answer": "setRequestBody",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ro-010",
+      "type": "multiple-choice",
+      "prompt": "To send a non-blocking (async) REST call, use:",
+      "options": ["executeAsync()", "execute()", "sendAsync()", "runAsync()"],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ro-011",
+      "type": "fill-blank",
+      "prompt": "Add a Content-Type request header.",
+      "codeContext": "r.___('Content-Type', 'application/json');",
+      "answer": "setRequestHeader",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ro-012",
+      "type": "multiple-choice",
+      "prompt": "In sn_ws.RESTMessageV2, what is 'sn_ws'?",
+      "options": [
+        "The scoped API namespace for web services",
+        "A table name",
+        "A role",
+        "A client object"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    }
+  ]
+}
