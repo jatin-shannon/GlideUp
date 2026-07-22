@@ -1,0 +1,144 @@
+{
+  "unitId": "business-rules",
+  "unitTitle": "Business Rules",
+  "certTier": "CAD",
+  "description": "Server-side automation with current, previous, when-to-run, and aborting operations.",
+  "exercises": [
+    {
+      "id": "br-001",
+      "type": "multiple-choice",
+      "prompt": "In a business rule, which object represents the record currently being processed?",
+      "options": ["current", "previous", "this", "record"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "br-002",
+      "type": "multiple-choice",
+      "prompt": "Which method shows an error message to the user from a business rule?",
+      "options": [
+        "gs.addErrorMessage()",
+        "gs.error()",
+        "gs.showError()",
+        "gs.alert()"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "br-003",
+      "type": "fill-blank",
+      "prompt": "Cancel the current database operation from a business rule.",
+      "codeContext": "current.___(true);",
+      "answer": "setAbortAction",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "br-004",
+      "type": "multiple-choice",
+      "prompt": "Which object holds the record's values from before the current changes?",
+      "options": ["previous", "current", "original", "prior"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "br-005",
+      "type": "assembly",
+      "prompt": "Assemble a before-rule snippet that sets priority to 1 for the hardware category.",
+      "blocks": [
+        "if (current.category == 'hardware') {",
+        "  current.priority = 1;",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "br-006",
+      "type": "multiple-choice",
+      "prompt": "In a 'before' business rule, why should you NOT call current.update()?",
+      "options": [
+        "The change already saves automatically, and update() causes recursion",
+        "update() is not a valid method",
+        "It only works in 'after' rules",
+        "It requires the admin role"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "br-007",
+      "type": "fill-blank",
+      "prompt": "Read the 'number' field's value as a string.",
+      "codeContext": "var num = current.___('number');",
+      "answer": "getValue",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "br-008",
+      "type": "multiple-choice",
+      "prompt": "Which 'when' value runs a business rule before the record is written to the database?",
+      "options": ["before", "after", "async", "display"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "br-009",
+      "type": "assembly",
+      "prompt": "Assemble a rule that blocks the save with an error when the description is empty.",
+      "blocks": [
+        "if (current.short_description.nil()) {",
+        "  gs.addErrorMessage('Description required');",
+        "  current.setAbortAction(true);",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "br-010",
+      "type": "multiple-choice",
+      "prompt": "What does current.setValue('priority', 2) do?",
+      "options": [
+        "Sets the priority field to 2 on the current record",
+        "Immediately writes priority 2 to the database",
+        "Reads the priority field",
+        "Aborts the action if priority is 2"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "br-011",
+      "type": "fill-blank",
+      "prompt": "Pass data from a display business rule to the client-side scratchpad.",
+      "codeContext": "___.callerName = current.caller_id.getDisplayValue();",
+      "answer": "g_scratchpad",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "br-012",
+      "type": "assembly",
+      "prompt": "Assemble a rule that logs the number of every priority 1 incident.",
+      "blocks": [
+        "if (current.priority == 1) {",
+        "  gs.info('High priority: ' + current.number);",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2],
+      "xp": 10,
+      "difficulty": 2
+    }
+  ]
+}
