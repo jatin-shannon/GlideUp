@@ -1,0 +1,156 @@
+{
+  "unitId": "flow-designer",
+  "unitTitle": "Flow Designer & Actions",
+  "certTier": "CAD",
+  "description": "Automate processes with triggers, actions, flow logic, and inline scripts.",
+  "exercises": [
+    {
+      "id": "fd-001",
+      "type": "multiple-choice",
+      "prompt": "What is Flow Designer?",
+      "options": [
+        "A low-code tool to automate processes with triggers and actions",
+        "A REST client",
+        "A client script editor",
+        "An ACL tool"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "fd-002",
+      "type": "multiple-choice",
+      "prompt": "A Flow begins with a:",
+      "options": [
+        "Trigger (e.g., record created or updated)",
+        "Response",
+        "Client script",
+        "Notification"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "fd-003",
+      "type": "multiple-choice",
+      "prompt": "Reusable building blocks that perform work in a flow are called:",
+      "options": ["Actions", "Widgets", "Policies", "ACLs"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "fd-004",
+      "type": "multiple-choice",
+      "prompt": "To run custom JavaScript within a flow, you use:",
+      "options": [
+        "A Script step / action with inputs and outputs",
+        "A client script",
+        "A business rule only",
+        "A UI Policy"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "fd-005",
+      "type": "multiple-choice",
+      "prompt": "Data passed between steps in a flow is referenced via:",
+      "options": ["Data pills", "g_form", "current", "gs.getProperty"],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "fd-006",
+      "type": "fill-blank",
+      "prompt": "In a flow script step, return a result by assigning to the outputs object.",
+      "codeContext": "(function execute(inputs, outputs) {\n  outputs.total = inputs.a + inputs.b;\n})(inputs, ___);",
+      "answer": "outputs",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "fd-007",
+      "type": "multiple-choice",
+      "prompt": "Compared to the legacy Workflow Editor, Flow Designer is:",
+      "options": [
+        "The modern, recommended automation tool",
+        "Deprecated",
+        "Client-side only",
+        "Used only for ACLs"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "fd-008",
+      "type": "multiple-choice",
+      "prompt": "A Subflow is:",
+      "options": [
+        "A reusable flow that can be called from other flows",
+        "A client script",
+        "A REST endpoint",
+        "A UI Action"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "fd-009",
+      "type": "multiple-choice",
+      "prompt": "Flow 'Flow Logic' includes constructs like:",
+      "options": [
+        "If, For Each, and Do Until",
+        "onLoad, onChange",
+        "GET, POST",
+        "read, write"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "fd-010",
+      "type": "multiple-choice",
+      "prompt": "An Action's inputs and outputs let you:",
+      "options": [
+        "Pass data in and return results to the flow",
+        "Style a form",
+        "Define ACLs",
+        "Schedule jobs"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "fd-011",
+      "type": "fill-blank",
+      "prompt": "Read the input named 'record' inside a flow script step.",
+      "codeContext": "var rec = ___.record;",
+      "answer": "inputs",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "fd-012",
+      "type": "multiple-choice",
+      "prompt": "Flows run:",
+      "options": [
+        "Server-side, triggered by records, schedules, or REST",
+        "Client-side only",
+        "In the browser DOM",
+        "In email templates"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    }
+  ]
+}

@@ -11,6 +11,10 @@ import scheduledJobs from './units/scheduled-jobs.json';
 import notifications from './units/notifications.json';
 import glideAggregate from './units/glide-aggregate.json';
 import restOutbound from './units/rest-outbound.json';
+import scriptedRest from './units/scripted-rest.json';
+import importTransform from './units/import-transform.json';
+import flowDesigner from './units/flow-designer.json';
+import bestPractices from './units/best-practices.json';
 import { indexUnit } from '../lib/db';
 
 /**
@@ -30,6 +34,10 @@ export const UNITS: Unit[] = [
   notifications as Unit,
   glideAggregate as Unit,
   restOutbound as Unit,
+  scriptedRest as Unit,
+  importTransform as Unit,
+  flowDesigner as Unit,
+  bestPractices as Unit,
 ];
 
 // Register every unit's exercise ids so db.ts can count unit progress.

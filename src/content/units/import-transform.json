@@ -1,0 +1,150 @@
+{
+  "unitId": "import-transform",
+  "unitTitle": "Import Sets & Transform Maps",
+  "certTier": "CIS",
+  "description": "Load external data into staging tables and map it onto target tables with scripts.",
+  "exercises": [
+    {
+      "id": "it-001",
+      "type": "multiple-choice",
+      "prompt": "What is an Import Set used for?",
+      "options": [
+        "Loading external data into a staging table before transforming it",
+        "Sending REST calls",
+        "Client-side validation",
+        "Scheduling jobs"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "it-002",
+      "type": "multiple-choice",
+      "prompt": "What does a Transform Map do?",
+      "options": [
+        "Maps import-set (source) fields onto a target table's fields",
+        "Deletes records",
+        "Sends email",
+        "Runs client scripts"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "it-003",
+      "type": "multiple-choice",
+      "prompt": "In a transform script, which object is the staging (import) row?",
+      "options": ["source", "target", "current", "g_form"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "it-004",
+      "type": "multiple-choice",
+      "prompt": "Which object is the record being written to the target table?",
+      "options": ["target", "source", "previous", "request"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "it-005",
+      "type": "fill-blank",
+      "prompt": "Copy the source 'u_name' value onto the target's 'name' field.",
+      "codeContext": "target.___ = source.u_name.toString();",
+      "answer": "name",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "it-006",
+      "type": "multiple-choice",
+      "prompt": "An onBefore transform script runs:",
+      "options": [
+        "Before each source row is written to the target",
+        "After the whole import finishes",
+        "On form load",
+        "On a schedule"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "it-007",
+      "type": "fill-blank",
+      "prompt": "Skip importing the current row from within an onBefore script.",
+      "codeContext": "___ = true;",
+      "answer": "ignore",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "it-008",
+      "type": "multiple-choice",
+      "prompt": "Marking a field mapping as 'Coalesce' is used to:",
+      "options": [
+        "Match existing records to update instead of always inserting",
+        "Delete duplicates",
+        "Encrypt the field",
+        "Hide the field"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "it-009",
+      "type": "multiple-choice",
+      "prompt": "An onAfter transform script runs:",
+      "options": [
+        "After each row has been transformed to the target",
+        "Before the import starts",
+        "On the client",
+        "Never"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "it-010",
+      "type": "fill-blank",
+      "prompt": "Write an informational line to the transform log.",
+      "codeContext": "log.___('Row skipped');",
+      "answer": "info",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "it-011",
+      "type": "assembly",
+      "prompt": "Assemble an onBefore script that ignores rows with a blank name.",
+      "blocks": [
+        "if (source.u_name.nil()) {",
+        "  ignore = true;",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "it-012",
+      "type": "multiple-choice",
+      "prompt": "Import Sets typically load data from:",
+      "options": [
+        "CSV, Excel, JDBC, or web-service sources",
+        "Client scripts",
+        "UI Policies",
+        "ACL scripts"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    }
+  ]
+}

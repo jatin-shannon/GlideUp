@@ -1,0 +1,152 @@
+{
+  "unitId": "scripted-rest",
+  "unitTitle": "Scripted REST APIs (Inbound)",
+  "certTier": "CIS",
+  "description": "Expose your own REST endpoints for external systems to call.",
+  "exercises": [
+    {
+      "id": "sr-001",
+      "type": "multiple-choice",
+      "prompt": "A Scripted REST API lets you:",
+      "options": [
+        "Expose custom REST endpoints for external systems to call",
+        "Call external APIs",
+        "Run client scripts",
+        "Schedule jobs"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "sr-002",
+      "type": "multiple-choice",
+      "prompt": "Inside a scripted REST resource, which two objects are available?",
+      "options": [
+        "request and response",
+        "current and previous",
+        "g_form and g_user",
+        "source and target"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "sr-003",
+      "type": "fill-blank",
+      "prompt": "Read the path parameter 'id' from the request.",
+      "codeContext": "var id = request.___.id;",
+      "answer": "pathParams",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "sr-004",
+      "type": "fill-blank",
+      "prompt": "Read the parsed JSON request body.",
+      "codeContext": "var data = request.body.___;",
+      "answer": "data",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "sr-005",
+      "type": "multiple-choice",
+      "prompt": "How do you read a query parameter named 'active'?",
+      "options": [
+        "request.queryParams.active",
+        "request.body.active",
+        "request.pathParams.active",
+        "request.getHeader('active')"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "sr-006",
+      "type": "assembly",
+      "prompt": "Assemble a resource function that returns a greeting object.",
+      "blocks": [
+        "(function process(request, response) {",
+        "  var body = { message: 'Hello' };",
+        "  response.setBody(body);",
+        "})(request, response);"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "sr-007",
+      "type": "fill-blank",
+      "prompt": "Set the body returned to the caller.",
+      "codeContext": "response.___({ ok: true });",
+      "answer": "setBody",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "sr-008",
+      "type": "multiple-choice",
+      "prompt": "Which method sets the HTTP status code on the response?",
+      "options": [
+        "response.setStatus()",
+        "response.setCode()",
+        "response.status()",
+        "response.httpStatus()"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "sr-009",
+      "type": "multiple-choice",
+      "prompt": "Scripted REST resources run on which side?",
+      "options": ["Server-side", "Client-side", "In the browser", "In email"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "sr-010",
+      "type": "fill-blank",
+      "prompt": "Return a 201 Created status.",
+      "codeContext": "response.___(201);",
+      "answer": "setStatus",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "sr-011",
+      "type": "multiple-choice",
+      "prompt": "A Scripted REST API is identified externally by its:",
+      "options": [
+        "API namespace and resource path",
+        "table name",
+        "role",
+        "event name"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "sr-012",
+      "type": "assembly",
+      "prompt": "Assemble a resource that looks up an incident by id and returns its number.",
+      "blocks": [
+        "var id = request.pathParams.id;",
+        "var gr = new GlideRecord('incident');",
+        "if (gr.get(id)) {",
+        "  response.setBody({ number: gr.getValue('number') });",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4],
+      "xp": 15,
+      "difficulty": 3
+    }
+  ]
+}
