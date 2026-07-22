@@ -1,0 +1,135 @@
+{
+  "unitId": "client-scripts",
+  "unitTitle": "Client Scripts",
+  "certTier": "CAD",
+  "description": "Client-side form logic that reacts as users load, type, and submit — the g_form API.",
+  "exercises": [
+    {
+      "id": "cs-001",
+      "type": "multiple-choice",
+      "prompt": "Which client script type runs when a form first opens?",
+      "options": ["onLoad", "onChange", "onSubmit", "onCellEdit"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "cs-002",
+      "type": "multiple-choice",
+      "prompt": "Which client script type runs when a specific field's value changes?",
+      "options": ["onChange", "onLoad", "onSubmit", "onCellEdit"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "cs-003",
+      "type": "fill-blank",
+      "prompt": "Read the value of the 'priority' field on the client.",
+      "codeContext": "var pri = g_form.___('priority');",
+      "answer": "getValue",
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "cs-004",
+      "type": "fill-blank",
+      "prompt": "Make the 'description' field mandatory.",
+      "codeContext": "g_form.___('description', true);",
+      "answer": "setMandatory",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "cs-005",
+      "type": "multiple-choice",
+      "prompt": "Which g_form method shows an informational message at the top of the form?",
+      "options": [
+        "addInfoMessage()",
+        "showInfo()",
+        "addMessage()",
+        "flashInfo()"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "cs-006",
+      "type": "assembly",
+      "prompt": "Assemble an onChange script that exits early while the form is still loading.",
+      "blocks": [
+        "function onChange(control, oldValue, newValue, isLoading) {",
+        "  if (isLoading) { return; }",
+        "  g_form.setValue('urgency', newValue);",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "cs-007",
+      "type": "fill-blank",
+      "prompt": "Hide the 'impact' field from the form.",
+      "codeContext": "g_form.___('impact', false);",
+      "answer": "setVisible",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "cs-008",
+      "type": "multiple-choice",
+      "prompt": "What is the fourth parameter passed to an onChange client script?",
+      "options": ["isLoading", "isTemplate", "oldValue", "control"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "cs-009",
+      "type": "assembly",
+      "prompt": "Assemble code that makes 'assigned_to' read-only and clears its value.",
+      "blocks": [
+        "g_form.setReadOnly('assigned_to', true);",
+        "g_form.setValue('assigned_to', '');"
+      ],
+      "correctOrder": [0, 1],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "cs-010",
+      "type": "multiple-choice",
+      "prompt": "Which method makes a field read-only on the client?",
+      "options": ["setReadOnly()", "setDisabled()", "disable()", "lockField()"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "cs-011",
+      "type": "fill-blank",
+      "prompt": "Display an error message beneath the 'priority' field.",
+      "codeContext": "g_form.___('priority', 'Too high', 'error');",
+      "answer": "showFieldMsg",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "cs-012",
+      "type": "assembly",
+      "prompt": "Assemble an onSubmit script that blocks submission when the short description is empty.",
+      "blocks": [
+        "function onSubmit() {",
+        "  if (g_form.getValue('short_description') == '') {",
+        "    return false;",
+        "  }",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4],
+      "xp": 15,
+      "difficulty": 3
+    }
+  ]
+}
