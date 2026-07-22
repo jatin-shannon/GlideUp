@@ -72,6 +72,69 @@
       "correctOrder": [0, 1, 2, 3],
       "xp": 10,
       "difficulty": 2
+    },
+    {
+      "id": "fn-007",
+      "type": "multiple-choice",
+      "prompt": "Which GlideSystem call writes a warning message to the system log?",
+      "options": ["gs.warn()", "gs.warning()", "gs.alert()", "gs.logWarning()"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "fn-008",
+      "type": "fill-blank",
+      "prompt": "Read the value of the system property 'glide.servlet.uri'.",
+      "codeContext": "var uri = gs.___('glide.servlet.uri');",
+      "answer": "getProperty",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "fn-009",
+      "type": "assembly",
+      "prompt": "Assemble a function that returns whether the current user is an admin.",
+      "blocks": [
+        "function isAdmin() {",
+        "  return gs.hasRole('admin');",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "fn-010",
+      "type": "multiple-choice",
+      "prompt": "Which operator checks for strict equality (value and type) in JavaScript?",
+      "options": ["==", "===", "=", "!="],
+      "correctIndex": 1,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "fn-011",
+      "type": "fill-blank",
+      "prompt": "Create an object representing the current date and time.",
+      "codeContext": "var now = new ___();\ngs.info(now.getDisplayValue());",
+      "answer": "GlideDateTime",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "fn-012",
+      "type": "assembly",
+      "prompt": "Assemble code that logs 'Adult' only when age is 18 or more.",
+      "blocks": [
+        "var age = 20;",
+        "if (age >= 18) {",
+        "  gs.info('Adult');",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 10,
+      "difficulty": 2
     }
   ]
 }

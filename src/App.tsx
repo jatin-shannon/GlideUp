@@ -27,11 +27,7 @@ export default function App() {
   useCloudSync(setProgress);
 
   if (!progress) {
-    return (
-      <div className="flex min-h-full items-center justify-center text-slate-500">
-        <span className="animate-pulse">Loading GlideUp…</span>
-      </div>
-    );
+    return <Splash />;
   }
 
   switch (view.name) {
@@ -86,4 +82,41 @@ export default function App() {
         />
       );
   }
+}
+
+/** Branded launch screen shown while the first progress load resolves. */
+function Splash() {
+  return (
+    <div className="flex min-h-full flex-col items-center justify-center gap-5 bg-slate-950">
+      <svg
+        viewBox="0 0 512 512"
+        className="h-24 w-24 animate-pop-in"
+        aria-hidden="true"
+      >
+        <path
+          d="M256 96 L392 176 V336 L256 416 L120 336 V176 Z"
+          fill="none"
+          stroke="#0ea5e9"
+          strokeWidth="24"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M300 200 L220 280 H272 L212 344"
+          fill="none"
+          stroke="#38bdf8"
+          strokeWidth="28"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <div className="text-center">
+        <p className="text-2xl font-black tracking-tight text-slate-50">
+          Glide<span className="text-glide-400">Up</span>
+        </p>
+        <p className="mt-1 text-sm text-slate-500">
+          <span className="animate-pulse">Loading…</span>
+        </p>
+      </div>
+    </div>
+  );
 }
