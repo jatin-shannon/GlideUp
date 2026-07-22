@@ -72,6 +72,76 @@
       "correctIndex": 2,
       "xp": 5,
       "difficulty": 2
+    },
+    {
+      "id": "gr-007",
+      "type": "multiple-choice",
+      "prompt": "Which method caps the number of records a query returns?",
+      "options": ["setLimit()", "setRows()", "setMax()", "limit()"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "gr-008",
+      "type": "fill-blank",
+      "prompt": "Save a change to the state field on an existing record.",
+      "codeContext": "gr.state = 2;\ngr.___();",
+      "answer": "update",
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "gr-009",
+      "type": "assembly",
+      "prompt": "Assemble a query for all incidents ordered by creation date.",
+      "blocks": [
+        "var gr = new GlideRecord('incident');",
+        "gr.orderBy('sys_created_on');",
+        "gr.query();"
+      ],
+      "correctOrder": [0, 1, 2],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "gr-010",
+      "type": "multiple-choice",
+      "prompt": "What does getRowCount() return after a query runs?",
+      "options": [
+        "The number of matching records",
+        "The current row index",
+        "The table's total row count",
+        "True if any records matched"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "gr-011",
+      "type": "fill-blank",
+      "prompt": "Filter records using an encoded query string for active incidents.",
+      "codeContext": "var gr = new GlideRecord('incident');\ngr.___('active=true');\ngr.query();",
+      "answer": "addEncodedQuery",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "gr-012",
+      "type": "assembly",
+      "prompt": "Assemble code that finds an incident by number and deletes it.",
+      "blocks": [
+        "var gr = new GlideRecord('incident');",
+        "gr.addQuery('number', 'INC0010001');",
+        "gr.query();",
+        "if (gr.next()) {",
+        "  gr.deleteRecord();",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4, 5],
+      "xp": 15,
+      "difficulty": 3
     }
   ]
 }
