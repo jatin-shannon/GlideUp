@@ -1,0 +1,154 @@
+{
+  "unitId": "script-includes",
+  "unitTitle": "Script Includes",
+  "certTier": "CAD",
+  "description": "Reusable server-side classes — on-demand functions and client-callable processors.",
+  "exercises": [
+    {
+      "id": "si-001",
+      "type": "multiple-choice",
+      "prompt": "What is the primary purpose of a Script Include?",
+      "options": [
+        "Store reusable server-side code",
+        "Run client-side field validation",
+        "Define a form layout",
+        "Schedule recurring jobs"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "si-002",
+      "type": "assembly",
+      "prompt": "Assemble a basic Script Include class definition.",
+      "blocks": [
+        "var Utils = Class.create();",
+        "Utils.prototype = {",
+        "  initialize: function() {},",
+        "  type: 'Utils'",
+        "};"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "si-003",
+      "type": "multiple-choice",
+      "prompt": "A Script Include called from a client script via GlideAjax must extend which class?",
+      "options": [
+        "AbstractAjaxProcessor",
+        "GlideAjax",
+        "GlideRecord",
+        "RESTMessageV2"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "si-004",
+      "type": "fill-blank",
+      "prompt": "In a client-callable Script Include, read the parameter named 'sysparm_user'.",
+      "codeContext": "var u = this.___('sysparm_user');",
+      "answer": "getParameter",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "si-005",
+      "type": "multiple-choice",
+      "prompt": "Which checkbox must be enabled for GlideAjax to call a Script Include from the client?",
+      "options": ["Client callable", "Active", "Global", "Protected"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "si-006",
+      "type": "fill-blank",
+      "prompt": "Instantiate the 'IncidentUtils' Script Include on the server.",
+      "codeContext": "var iu = new ___();\niu.closeOld();",
+      "answer": "IncidentUtils",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "si-007",
+      "type": "multiple-choice",
+      "prompt": "Where does Script Include code execute?",
+      "options": [
+        "Server-side",
+        "Client-side (browser)",
+        "Both at once",
+        "In the database only"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "si-008",
+      "type": "fill-blank",
+      "prompt": "Set the prototype property that names the class (used for debugging).",
+      "codeContext": "  ___: 'MyUtils'",
+      "answer": "type",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "si-009",
+      "type": "assembly",
+      "prompt": "Assemble a client-callable Script Include shell.",
+      "blocks": [
+        "var AjaxUtils = Class.create();",
+        "AjaxUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {",
+        "  getName: function() {",
+        "    return gs.getUserName();",
+        "  }",
+        "});"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4, 5],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "si-010",
+      "type": "multiple-choice",
+      "prompt": "How do you call a Script Include method getData() from a business rule?",
+      "options": [
+        "new MyInclude().getData()",
+        "MyInclude.getData()",
+        "gs.include('getData')",
+        "g_form.getData()"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "si-011",
+      "type": "multiple-choice",
+      "prompt": "What does Object.extendsObject(AbstractAjaxProcessor, {...}) enable?",
+      "options": [
+        "Client-callable methods via GlideAjax",
+        "Scheduled execution",
+        "Database triggers",
+        "Client field validation"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "si-012",
+      "type": "fill-blank",
+      "prompt": "Complete the class that makes a Script Include callable from GlideAjax.",
+      "codeContext": "AjaxUtils.prototype = Object.extendsObject(___, {",
+      "answer": "AbstractAjaxProcessor",
+      "xp": 10,
+      "difficulty": 3
+    }
+  ]
+}

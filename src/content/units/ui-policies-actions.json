@@ -1,0 +1,140 @@
+{
+  "unitId": "ui-policies-actions",
+  "unitTitle": "UI Policies & Actions",
+  "certTier": "CAD",
+  "description": "Shape form behavior declaratively, and add buttons that run your code.",
+  "exercises": [
+    {
+      "id": "ui-001",
+      "type": "multiple-choice",
+      "prompt": "What does a UI Policy do without any scripting?",
+      "options": [
+        "Make fields mandatory, read-only, or visible based on conditions",
+        "Query records from a table",
+        "Send an email notification",
+        "Run a scheduled job"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "ui-002",
+      "type": "multiple-choice",
+      "prompt": "One reason to prefer a UI Policy over a client script is that it:",
+      "options": [
+        "Is declarative and runs after client scripts",
+        "Runs on the server",
+        "Can query the database",
+        "Sends notifications"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ui-003",
+      "type": "fill-blank",
+      "prompt": "In a UI Policy 'Execute if true' script, make 'reason' mandatory.",
+      "codeContext": "g_form.___('reason', true);",
+      "answer": "setMandatory",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ui-004",
+      "type": "multiple-choice",
+      "prompt": "A UI Action typically appears on a form as what?",
+      "options": ["A button or link", "A field", "A related list", "A report"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "ui-005",
+      "type": "fill-blank",
+      "prompt": "In a UI Action, redirect the user to a list after running.",
+      "codeContext": "action.___('incident_list.do');",
+      "answer": "setRedirectURL",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ui-006",
+      "type": "multiple-choice",
+      "prompt": "Which object is the current record in a UI Action's server-side script?",
+      "options": ["current", "g_form", "action", "gr"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ui-007",
+      "type": "assembly",
+      "prompt": "Assemble a UI Action server script that closes the incident and returns to it.",
+      "blocks": [
+        "current.state = 7;",
+        "current.update();",
+        "action.setRedirectURL(current);"
+      ],
+      "correctOrder": [0, 1, 2],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "ui-008",
+      "type": "multiple-choice",
+      "prompt": "UI Policies execute on which side?",
+      "options": ["Client-side", "Server-side", "In the database", "Both"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ui-009",
+      "type": "fill-blank",
+      "prompt": "Make 'assigned_to' read-only from a UI Policy script.",
+      "codeContext": "g_form.___('assigned_to', true);",
+      "answer": "setReadOnly",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ui-010",
+      "type": "multiple-choice",
+      "prompt": "A UI Action with 'Client' checked runs its Onclick function where?",
+      "options": [
+        "In the browser (client-side)",
+        "On the server",
+        "In a scheduled job",
+        "In the database"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ui-011",
+      "type": "fill-blank",
+      "prompt": "In a UI Policy's reverse ('Execute if false') script, show 'reason' again.",
+      "codeContext": "g_form.___('reason', true);",
+      "answer": "setVisible",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ui-012",
+      "type": "assembly",
+      "prompt": "Assemble a UI Action that blocks non-admins with an error.",
+      "blocks": [
+        "if (!gs.hasRole('admin')) {",
+        "  gs.addErrorMessage('Not authorized');",
+        "  action.setRedirectURL(current);",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3],
+      "xp": 15,
+      "difficulty": 3
+    }
+  ]
+}
