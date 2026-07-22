@@ -1,0 +1,157 @@
+{
+  "unitId": "acls-security",
+  "unitTitle": "ACLs & Security",
+  "certTier": "CIS",
+  "description": "Control who can read, write, create, and delete — the access-control layer.",
+  "exercises": [
+    {
+      "id": "acl-001",
+      "type": "multiple-choice",
+      "prompt": "What does an ACL control?",
+      "options": [
+        "Who can read, write, create, or delete records and fields",
+        "The layout of a form",
+        "Email delivery rules",
+        "When scheduled jobs run"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "acl-002",
+      "type": "multiple-choice",
+      "prompt": "What does ACL stand for?",
+      "options": [
+        "Access Control List",
+        "Application Config Layer",
+        "Automated Control Logic",
+        "Active Client List"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "acl-003",
+      "type": "multiple-choice",
+      "prompt": "Which set of operations can a record ACL secure?",
+      "options": [
+        "read, write, create, delete",
+        "onLoad, onChange",
+        "before, after",
+        "GET, POST"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "acl-004",
+      "type": "fill-blank",
+      "prompt": "In an ACL script, grant or deny access by setting this variable.",
+      "codeContext": "___ = gs.hasRole('itil');",
+      "answer": "answer",
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "acl-005",
+      "type": "multiple-choice",
+      "prompt": "An ACL grants access only when which parts pass?",
+      "options": [
+        "Roles, condition, AND script all pass",
+        "Any one of them passes",
+        "Only the role check",
+        "Only the script"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "acl-006",
+      "type": "fill-blank",
+      "prompt": "Check whether the current user can read this record.",
+      "codeContext": "if (gr.___()) {\n  gs.info(gr.number);\n}",
+      "answer": "canRead",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "acl-007",
+      "type": "multiple-choice",
+      "prompt": "Which method checks write access on a GlideRecord?",
+      "options": ["canWrite()", "canEdit()", "hasWrite()", "isWritable()"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "acl-008",
+      "type": "multiple-choice",
+      "prompt": "Which class queries records while enforcing the user's ACLs?",
+      "options": [
+        "GlideRecordSecure",
+        "GlideRecord",
+        "GlideAggregate",
+        "GlideQuery"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "acl-009",
+      "type": "fill-blank",
+      "prompt": "In an ACL, grant access when the user holds the 'admin' role.",
+      "codeContext": "answer = gs.___('admin');",
+      "answer": "hasRole",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "acl-010",
+      "type": "multiple-choice",
+      "prompt": "Under high-security defaults, if no ACL grants access, the result is:",
+      "options": [
+        "Access denied",
+        "Access granted to everyone",
+        "Granted to ITIL users",
+        "Read-only access"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "acl-011",
+      "type": "assembly",
+      "prompt": "Assemble an ACL script granting access to admins or the record's owner.",
+      "blocks": [
+        "if (gs.hasRole('admin')) {",
+        "  answer = true;",
+        "} else {",
+        "  answer = (current.assigned_to == gs.getUserID());",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "acl-012",
+      "type": "multiple-choice",
+      "prompt": "Field-level ACLs are evaluated in addition to which other ACLs?",
+      "options": [
+        "Table-level ACLs",
+        "UI Policies",
+        "Client Scripts",
+        "Business Rules"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 2
+    }
+  ]
+}

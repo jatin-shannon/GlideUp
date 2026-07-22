@@ -1,0 +1,151 @@
+{
+  "unitId": "glide-ajax",
+  "unitTitle": "GlideAjax",
+  "certTier": "CAD",
+  "description": "Call server-side Script Includes from the client, asynchronously.",
+  "exercises": [
+    {
+      "id": "ga-001",
+      "type": "multiple-choice",
+      "prompt": "GlideAjax lets a client script call what on the server?",
+      "options": [
+        "A client-callable Script Include",
+        "Another client script",
+        "A UI Policy",
+        "A business rule directly"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ga-002",
+      "type": "assembly",
+      "prompt": "Assemble a basic GlideAjax request.",
+      "blocks": [
+        "var ga = new GlideAjax('MyUtils');",
+        "ga.addParam('sysparm_name', 'getData');",
+        "ga.getXMLAnswer(handleResponse);"
+      ],
+      "correctOrder": [0, 1, 2],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ga-003",
+      "type": "fill-blank",
+      "prompt": "Add a parameter telling the Script Include which method to run.",
+      "codeContext": "ga.___('sysparm_name', 'getData');",
+      "answer": "addParam",
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ga-004",
+      "type": "multiple-choice",
+      "prompt": "Which parameter name tells GlideAjax which Script Include method to run?",
+      "options": [
+        "sysparm_name",
+        "sysparm_method",
+        "sysparm_value",
+        "sysparm_data"
+      ],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ga-005",
+      "type": "multiple-choice",
+      "prompt": "Which method sends the request and passes the plain answer to a callback?",
+      "options": ["getXMLAnswer()", "execute()", "send()", "getResponse()"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "ga-006",
+      "type": "assembly",
+      "prompt": "Assemble a callback that writes the returned answer to a field.",
+      "blocks": [
+        "function handleResponse(answer) {",
+        "  g_form.setValue('u_result', answer);",
+        "}"
+      ],
+      "correctOrder": [0, 1, 2],
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ga-007",
+      "type": "multiple-choice",
+      "prompt": "GlideAjax calls are, by default, which of these?",
+      "options": ["Asynchronous", "Synchronous", "Cached", "Scheduled"],
+      "correctIndex": 0,
+      "xp": 5,
+      "difficulty": 3
+    },
+    {
+      "id": "ga-008",
+      "type": "fill-blank",
+      "prompt": "Create a GlideAjax object targeting the 'HRUtils' Script Include.",
+      "codeContext": "var ga = new ___('HRUtils');",
+      "answer": "GlideAjax",
+      "xp": 5,
+      "difficulty": 1
+    },
+    {
+      "id": "ga-009",
+      "type": "multiple-choice",
+      "prompt": "On the server, a GlideAjax-invoked method reads parameters using which call?",
+      "options": [
+        "this.getParameter()",
+        "g_form.getValue()",
+        "current.getValue()",
+        "gs.getParam()"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "ga-010",
+      "type": "assembly",
+      "prompt": "Assemble a client call that passes the caller and handles the manager result.",
+      "blocks": [
+        "var ga = new GlideAjax('HRUtils');",
+        "ga.addParam('sysparm_name', 'getManager');",
+        "ga.addParam('sysparm_user', g_form.getValue('caller_id'));",
+        "ga.getXMLAnswer(function(answer) {",
+        "  g_form.setValue('manager', answer);",
+        "});"
+      ],
+      "correctOrder": [0, 1, 2, 3, 4, 5],
+      "xp": 15,
+      "difficulty": 3
+    },
+    {
+      "id": "ga-011",
+      "type": "multiple-choice",
+      "prompt": "Why is getXMLAnswer() often preferred over getXML()?",
+      "options": [
+        "It returns just the answer string, so no XML parsing is needed",
+        "It runs synchronously",
+        "It caches the result",
+        "It works only client-side"
+      ],
+      "correctIndex": 0,
+      "xp": 10,
+      "difficulty": 3
+    },
+    {
+      "id": "ga-012",
+      "type": "fill-blank",
+      "prompt": "Complete the reserved parameter name for the method to call.",
+      "codeContext": "ga.addParam('___', 'getData');",
+      "answer": "sysparm_name",
+      "xp": 5,
+      "difficulty": 2
+    }
+  ]
+}
