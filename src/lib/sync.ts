@@ -167,6 +167,16 @@ export async function signInWithMagicLink(email: string): Promise<void> {
   if (error) throw error;
 }
 
+/** Start Google OAuth sign-in. Redirects to Google, then back to the app. */
+export async function signInWithGoogle(): Promise<void> {
+  if (!supabase) throw new Error('Sync is not configured.');
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin },
+  });
+  if (error) throw error;
+}
+
 /** Sign in with an existing email + password. */
 export async function signInWithPassword(
   email: string,

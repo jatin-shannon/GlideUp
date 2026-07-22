@@ -5,6 +5,7 @@ import {
   getUser,
   onAuthChange,
   onPasswordRecovery,
+  signInWithGoogle,
   signInWithMagicLink,
   signInWithPassword,
   signUpWithPassword,
@@ -120,6 +121,18 @@ export default function AccountSync({ onSynced }: Props) {
     } catch (err) {
       setError(readableAuthError(err));
     } finally {
+      setBusy(false);
+    }
+  }
+
+  async function google() {
+    setBusy(true);
+    reset();
+    try {
+      await signInWithGoogle();
+      // On success the browser redirects to Google; nothing else to do.
+    } catch (err) {
+      setError(readableAuthError(err));
       setBusy(false);
     }
   }
@@ -248,6 +261,21 @@ export default function AccountSync({ onSynced }: Props) {
                 : 'Create an account to sync your progress across devices.'}
             </p>
 
+            <button
+              onClick={google}
+              disabled={busy}
+              className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-white py-2.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-100 disabled:opacity-50"
+            >
+              <GoogleMark />
+              Continue with Google
+            </button>
+
+            <div className="flex items-center gap-3 py-0.5 text-xs text-slate-600">
+              <span className="h-px flex-1 bg-slate-700" />
+              or
+              <span className="h-px flex-1 bg-slate-700" />
+            </div>
+
             <form onSubmit={submitPassword} className="space-y-2">
               <input
                 type="email"
@@ -325,11 +353,38 @@ export default function AccountSync({ onSynced }: Props) {
   );
 }
 
+/** Google "G" logo mark. */
+function GoogleMark() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
+      <path
+        fill="#EA4335"
+        d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.3 17.7 9.5 24 9.5z"
+      />
+      <path
+        fill="#4285F4"
+        d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9.1h12.4c-.5 2.9-2.1 5.4-4.6 7l7.2 5.6c4.2-3.9 6.6-9.6 6.6-16.9z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M10.4 28.3c-.5-1.4-.7-2.9-.7-4.5s.3-3.1.7-4.5l-7.8-6.1C1 16.5 0 20.1 0 23.8s1 7.3 2.6 10.4l7.8-5.9z"
+      />
+      <path
+        fill="#34A853"
+        d="M24 48c6.2 0 11.5-2 15.3-5.6l-7.2-5.6c-2 1.4-4.7 2.3-8.1 2.3-6.3 0-11.7-3.8-13.6-9.3l-7.8 5.9C6.5 42.6 14.6 48 24 48z"
+      />
+    </svg>
+  );
+}
+
 /** Map common Supabase auth errors to friendlier copy. */
 function readableAuthError(err: unknown): string {
   const msg = err instanceof Error ? err.message : 'Something went wrong.';
   if (/invalid login credentials/i.test(msg)) {
     return 'Incorrect email or password.';
+  }
+  if (/provider is not enabled|not enabled|unsupported provider/i.test(msg)) {
+    return "Google sign-in isn't enabled yet — try email instead.";
   }
   if (/email not confirmed/i.test(msg)) {
     return 'Please confirm your email first — check your inbox for the link.';
