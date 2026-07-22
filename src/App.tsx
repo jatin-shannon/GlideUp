@@ -7,12 +7,14 @@ import Home from './screens/Home';
 import Lesson, { type SessionSummary } from './screens/Lesson';
 import Results from './screens/Results';
 import Profile from './screens/Profile';
+import Roadmap from './screens/Roadmap';
 
 type View =
   | { name: 'home' }
   | { name: 'lesson'; unitId: string }
   | { name: 'results'; summary: SessionSummary }
-  | { name: 'profile' };
+  | { name: 'profile' }
+  | { name: 'roadmap' };
 
 export default function App() {
   const [progress, setProgress] = useState<ProgressRecord | null>(null);
@@ -37,6 +39,7 @@ export default function App() {
           progress={progress}
           onStartUnit={(unitId) => setView({ name: 'lesson', unitId })}
           onOpenProfile={() => setView({ name: 'profile' })}
+          onOpenRoadmap={() => setView({ name: 'roadmap' })}
         />
       );
 
@@ -80,6 +83,11 @@ export default function App() {
           onBack={() => setView({ name: 'home' })}
           onSynced={setProgress}
         />
+      );
+
+    case 'roadmap':
+      return (
+        <Roadmap progress={progress} onBack={() => setView({ name: 'home' })} />
       );
   }
 }
