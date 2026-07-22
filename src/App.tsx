@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { ProgressRecord } from './types';
 import { loadProgress } from './lib/db';
 import { useCloudSync } from './lib/useCloudSync';
 import { getUnit } from './content';
+import { ROADMAP, buildCheckpointUnit } from './content/roadmap';
 import Home from './screens/Home';
 import Lesson, { type SessionSummary } from './screens/Lesson';
 import Results from './screens/Results';
@@ -28,6 +29,19 @@ export default function App() {
   // results refresh the in-memory record. No-ops when sync is not configured.
   useCloudSync(setProgress);
 
+  // Resolve the active lesson's unit once per lesson. Checkpoints build a
+  // freshly-sampled review unit; memoizing keeps it stable across re-renders
+  // so a mid-session sync can't reshuffle the exercises.
+  const lessonData = useMemo(() => {
+    if (view.name !== 'lesson') return null;
+    const found = getUnit(view.unitId);
+    if (found) return { unit: found, isReview: false };
+    const node = ROADMAP.find(
+      (n) => n.id === view.unitId && n.kind === 'checkpoint',
+    );
+    return node ? { unit: buildCheckpointUnit(node), isReview: true } : null;
+  }, [view]);
+
   if (!progress) {
     return <Splash />;
   }
@@ -44,14 +58,14 @@ export default function App() {
       );
 
     case 'lesson': {
-      const unit = getUnit(view.unitId);
-      if (!unit) {
+      if (!lessonData) {
         setView({ name: 'home' });
         return null;
       }
       return (
         <Lesson
-          unit={unit}
+          unit={lessonData.unit}
+          isReview={lessonData.isReview}
           progress={progress}
           onQuit={() => setView({ name: 'home' })}
           onFinish={(summary, updated) => {

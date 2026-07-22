@@ -2,7 +2,9 @@ import { useMemo, useState } from 'react';
 import type { Exercise, ProgressRecord, Unit } from '../types';
 import {
   recordCorrectAnswer,
+  recordReviewAnswer,
   recordWrongAnswer,
+  markCheckpointComplete,
   maybeAwardUnitBadge,
 } from '../lib/db';
 import { badgeLabel } from '../content';
@@ -28,6 +30,8 @@ export interface SessionSummary {
 interface LessonProps {
   unit: Unit;
   progress: ProgressRecord;
+  /** True when this is a Checkpoint review (scores XP but not unit completion). */
+  isReview?: boolean;
   onFinish: (summary: SessionSummary, updated: ProgressRecord) => void;
   onQuit: () => void;
 }
@@ -45,6 +49,7 @@ interface Feedback {
 export default function Lesson({
   unit,
   progress,
+  isReview = false,
   onFinish,
   onQuit,
 }: LessonProps) {
@@ -79,12 +84,15 @@ export default function Lesson({
       setCombo(nextCombo);
       setBestCombo((b) => Math.max(b, nextCombo));
 
-      const result = await recordCorrectAnswer(
-        exercise,
-        unit.unitId,
-        exercises.length,
-        nextCombo,
-      );
+      // Reviews score XP + streak but never touch unit completion.
+      const result = isReview
+        ? await recordReviewAnswer(exercise, nextCombo)
+        : await recordCorrectAnswer(
+            exercise,
+            unit.unitId,
+            exercises.length,
+            nextCombo,
+          );
       setXpEarned((x) => x + result.xpGained);
       setCorrectCount((c) => c + 1);
       setStreak(result.progress.streak);
@@ -92,8 +100,10 @@ export default function Lesson({
       setLatest(result.progress);
       setFeedback({ correct: true, xp: result.xpGained });
 
-      const badge = await maybeAwardUnitBadge(unit);
-      if (badge) setNewBadge(badge);
+      if (!isReview) {
+        const badge = await maybeAwardUnitBadge(unit);
+        if (badge) setNewBadge(badge);
+      }
     } else {
       setCombo(0);
       const updated = await recordWrongAnswer();
@@ -103,11 +113,16 @@ export default function Lesson({
     }
   }
 
-  function advance() {
+  async function advance() {
     const outOfHearts = hearts <= 0;
     const isLast = index >= exercises.length - 1;
 
     if (outOfHearts || isLast) {
+      // Passing a Checkpoint (reaching the end with hearts left) marks it done.
+      let finalProgress = latest;
+      if (isReview && isLast && !outOfHearts) {
+        finalProgress = await markCheckpointComplete(unit.unitId);
+      }
       onFinish(
         {
           unitId: unit.unitId,
@@ -121,7 +136,7 @@ export default function Lesson({
           newBadge,
           outOfHearts,
         },
-        latest,
+        finalProgress,
       );
       return;
     }
@@ -168,6 +183,7 @@ export default function Lesson({
           {exercise.prompt}
         </h2>
         <ExerciseBody
+          key={`${exercise.id}-${index}`}
           exercise={exercise}
           submitted={submitted}
           onCheck={handleCheck}

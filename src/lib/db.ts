@@ -50,6 +50,7 @@ export function defaultProgress(): ProgressRecord {
     unitProgress: {},
     badges: [],
     activeDays: [],
+    completedCheckpoints: [],
   };
 }
 
@@ -60,7 +61,11 @@ export function defaultProgress(): ProgressRecord {
 export async function loadProgress(): Promise<ProgressRecord> {
   const db = await getDB();
   const existing = await db.get(STORE, PROGRESS_KEY);
-  const record = existing ?? defaultProgress();
+  // Normalize records written before newer fields existed.
+  const record: ProgressRecord = {
+    ...defaultProgress(),
+    ...(existing ?? {}),
+  };
 
   const today = todayISO();
   const { hearts, heartsDate } = heartsForToday(record, today);
@@ -95,6 +100,52 @@ export async function recordWrongAnswer(): Promise<ProgressRecord> {
     hearts: loseHeart(record.hearts),
   };
   return saveProgress(updated);
+}
+
+/**
+ * Register a correct answer in a Checkpoint review. Awards XP (combo-scaled)
+ * and advances the daily streak, but deliberately does NOT touch
+ * completedExercises or unitProgress — the reviewed exercises already belong
+ * to their real units, so a review must not double-count unit completion.
+ */
+export async function recordReviewAnswer(
+  exercise: Exercise,
+  comboCount: number,
+): Promise<CorrectAnswerResult> {
+  const record = await loadProgress();
+  const today = todayISO();
+
+  const xpGained = awardXp(exercise, comboCount);
+  const { streak, advanced } = advanceStreak(
+    record.streak,
+    record.lastActiveDate,
+    today,
+  );
+  const activeDays = record.activeDays.includes(today)
+    ? record.activeDays
+    : [...record.activeDays, today];
+
+  const updated: ProgressRecord = {
+    ...record,
+    xp: record.xp + xpGained,
+    streak,
+    lastActiveDate: today,
+    activeDays,
+  };
+  await saveProgress(updated);
+  return { progress: updated, xpGained, streakAdvanced: advanced };
+}
+
+/** Mark a Checkpoint review as passed (idempotent). */
+export async function markCheckpointComplete(
+  checkpointId: string,
+): Promise<ProgressRecord> {
+  const record = await loadProgress();
+  if (record.completedCheckpoints.includes(checkpointId)) return record;
+  return saveProgress({
+    ...record,
+    completedCheckpoints: [...record.completedCheckpoints, checkpointId],
+  });
 }
 
 export interface CorrectAnswerResult {

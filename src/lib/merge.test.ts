@@ -16,6 +16,7 @@ function rec(overrides: Partial<ProgressRecord>): ProgressRecord {
     unitProgress: {},
     badges: [],
     activeDays: [],
+    completedCheckpoints: [],
     ...overrides,
   };
 }

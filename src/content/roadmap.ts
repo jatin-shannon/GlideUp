@@ -1,3 +1,4 @@
+import type { Exercise, Unit } from '../types';
 import { getUnit } from './index';
 
 /**
@@ -230,7 +231,49 @@ export const TIER_LABEL: Record<Tier, string> = {
   Review: 'Checkpoint review',
 };
 
-/** A unit node is playable once its content file is registered. */
-export function isNodeLive(node: RoadmapNode): boolean {
-  return node.kind === 'unit' && getUnit(node.id) !== undefined;
+/** Unit ids a checkpoint reviews (only the orders that are real units). */
+function reviewedUnitIds(node: RoadmapNode): string[] {
+  return (node.reviewOf ?? [])
+    .map((order) => ROADMAP.find((n) => n.order === order))
+    .filter((n): n is RoadmapNode => !!n && n.kind === 'unit')
+    .map((n) => n.id);
 }
+
+/**
+ * A unit node is playable once its content file is registered. A checkpoint
+ * is playable once every unit it reviews is live.
+ */
+export function isNodeLive(node: RoadmapNode): boolean {
+  if (node.kind === 'unit') return getUnit(node.id) !== undefined;
+  return reviewedUnitIds(node).every((id) => getUnit(id) !== undefined);
+}
+
+/** How many exercises a checkpoint review session runs. */
+const CHECKPOINT_SIZE = 12;
+
+/**
+ * Build a synthetic review "unit" for a checkpoint by sampling exercises from
+ * the units it reviews. The reviewed exercises keep their real ids (so combo
+ * and XP work), but the caller must play these as a review — see
+ * `recordReviewAnswer` — so unit completion is never double-counted.
+ */
+export function buildCheckpointUnit(node: RoadmapNode): Unit {
+  const pool: Exercise[] = [];
+  for (const id of reviewedUnitIds(node)) {
+    const unit = getUnit(id);
+    if (unit) pool.push(...unit.exercises);
+  }
+  // Fisher–Yates shuffle, then take a fixed-size slice.
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return {
+    unitId: node.id,
+    unitTitle: node.title,
+    certTier: node.tier,
+    description: node.focus,
+    exercises: pool.slice(0, Math.min(CHECKPOINT_SIZE, pool.length)),
+  };
+}
+
