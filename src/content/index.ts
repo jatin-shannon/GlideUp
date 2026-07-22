@@ -7,6 +7,10 @@ import scriptIncludes from './units/script-includes.json';
 import glideAjax from './units/glide-ajax.json';
 import uiPoliciesActions from './units/ui-policies-actions.json';
 import aclsSecurity from './units/acls-security.json';
+import scheduledJobs from './units/scheduled-jobs.json';
+import notifications from './units/notifications.json';
+import glideAggregate from './units/glide-aggregate.json';
+import restOutbound from './units/rest-outbound.json';
 import { indexUnit } from '../lib/db';
 
 /**
@@ -22,6 +26,10 @@ export const UNITS: Unit[] = [
   glideAjax as Unit,
   uiPoliciesActions as Unit,
   aclsSecurity as Unit,
+  scheduledJobs as Unit,
+  notifications as Unit,
+  glideAggregate as Unit,
+  restOutbound as Unit,
 ];
 
 // Register every unit's exercise ids so db.ts can count unit progress.
