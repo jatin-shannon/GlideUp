@@ -2,6 +2,7 @@ import type { Unit } from '../types';
 import foundations from './units/foundations.json';
 import glideRecord from './units/glide-record.json';
 import businessRules from './units/business-rules.json';
+import clientScripts from './units/client-scripts.json';
 import { indexUnit } from '../lib/db';
 
 /**
@@ -12,6 +13,7 @@ export const UNITS: Unit[] = [
   foundations as Unit,
   glideRecord as Unit,
   businessRules as Unit,
+  clientScripts as Unit,
 ];
 
 // Register every unit's exercise ids so db.ts can count unit progress.
