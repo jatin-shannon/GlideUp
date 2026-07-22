@@ -69,4 +69,6 @@ export interface ProgressRecord {
   badges: string[];
   /** ISO dates the learner completed at least one exercise — powers the calendar. */
   activeDays: string[];
+  /** Ids of Checkpoint reviews the learner has passed. */
+  completedCheckpoints: string[];
 }

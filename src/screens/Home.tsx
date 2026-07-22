@@ -38,7 +38,10 @@ function resolve(progress: ProgressRecord): ResolvedNode[] {
     const completed = unit
       ? Math.min(progress.unitProgress[node.id]?.completed ?? 0, total)
       : 0;
-    const done = total > 0 && completed >= total;
+    const done =
+      node.kind === 'checkpoint'
+        ? progress.completedCheckpoints.includes(node.id)
+        : total > 0 && completed >= total;
     const unlocked = live && prevDone;
     if (node.kind === 'unit') prevDone = live ? done : false;
     return { node, live, unlocked, done, completed, total };

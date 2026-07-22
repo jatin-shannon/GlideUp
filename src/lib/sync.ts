@@ -25,6 +25,10 @@ type ProgressRow = {
   unit_progress: Record<string, { completed: number; total: number }>;
   badges: string[];
   active_days: string[];
+  // Read-only here: not yet a column on the remote table, so it is never
+  // written back. Checkpoint completion stays device-local until the column
+  // is added; the XP earned during reviews still syncs via `xp`.
+  completed_checkpoints?: string[];
   updated_at?: string;
 };
 
@@ -41,6 +45,7 @@ function rowToRecord(row: ProgressRow): ProgressRecord {
     unitProgress: row.unit_progress ?? {},
     badges: row.badges ?? [],
     activeDays: row.active_days ?? [],
+    completedCheckpoints: row.completed_checkpoints ?? [],
   };
 }
 
@@ -57,6 +62,7 @@ function recordToRow(userId: string, r: ProgressRecord): ProgressRow {
     unit_progress: r.unitProgress,
     badges: r.badges,
     active_days: r.activeDays,
+    // completed_checkpoints intentionally omitted — no remote column yet.
   };
 }
 
@@ -131,6 +137,10 @@ export function mergeRecords(
     unitProgress: unitProgressFor(completedExercises),
     badges: union(local.badges, remote.badges),
     activeDays: union(local.activeDays, remote.activeDays).sort(),
+    completedCheckpoints: union(
+      local.completedCheckpoints,
+      remote.completedCheckpoints,
+    ),
   };
 }
 
