@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import type { ProgressRecord } from './types';
 import { loadProgress } from './lib/db';
 import { useCloudSync } from './lib/useCloudSync';
+import { syncEnabled } from './lib/supabase';
+import { getUser } from './lib/sync';
 import { getUnit } from './content';
 import { ROADMAP, buildCheckpointUnit } from './content/roadmap';
 import Home from './screens/Home';
@@ -9,6 +11,9 @@ import Lesson, { type SessionSummary } from './screens/Lesson';
 import Results from './screens/Results';
 import Profile from './screens/Profile';
 import Roadmap from './screens/Roadmap';
+import SignInGate from './components/SignInGate';
+
+const SIGNIN_DISMISSED_KEY = 'glideup.signinDismissed';
 
 type View =
   | { name: 'home' }
@@ -20,9 +25,17 @@ type View =
 export default function App() {
   const [progress, setProgress] = useState<ProgressRecord | null>(null);
   const [view, setView] = useState<View>({ name: 'home' });
+  // Show the sign-in prompt on load unless already dismissed. Suppressed below
+  // if the user turns out to be signed in already.
+  const [showSignIn, setShowSignIn] = useState(
+    () => syncEnabled && !localStorage.getItem(SIGNIN_DISMISSED_KEY),
+  );
 
   useEffect(() => {
     loadProgress().then(setProgress);
+    getUser().then((user) => {
+      if (user) setShowSignIn(false);
+    });
   }, []);
 
   // Cross-device sync: reconcile on foreground/online, push on blur. Merged
@@ -46,64 +59,84 @@ export default function App() {
     return <Splash />;
   }
 
-  switch (view.name) {
-    case 'home':
-      return (
-        <Home
-          progress={progress}
-          onStartUnit={(unitId) => setView({ name: 'lesson', unitId })}
-          onOpenProfile={() => setView({ name: 'profile' })}
-          onOpenRoadmap={() => setView({ name: 'roadmap' })}
-        />
-      );
+  const screen = (() => {
+    switch (view.name) {
+      case 'home':
+        return (
+          <Home
+            progress={progress}
+            onStartUnit={(unitId) => setView({ name: 'lesson', unitId })}
+            onOpenProfile={() => setView({ name: 'profile' })}
+            onOpenRoadmap={() => setView({ name: 'roadmap' })}
+          />
+        );
 
-    case 'lesson': {
-      if (!lessonData) {
-        setView({ name: 'home' });
-        return null;
+      case 'lesson': {
+        if (!lessonData) {
+          setView({ name: 'home' });
+          return null;
+        }
+        return (
+          <Lesson
+            unit={lessonData.unit}
+            isReview={lessonData.isReview}
+            progress={progress}
+            onQuit={() => setView({ name: 'home' })}
+            onFinish={(summary, updated) => {
+              setProgress(updated);
+              setView({ name: 'results', summary });
+            }}
+          />
+        );
       }
-      return (
-        <Lesson
-          unit={lessonData.unit}
-          isReview={lessonData.isReview}
-          progress={progress}
-          onQuit={() => setView({ name: 'home' })}
-          onFinish={(summary, updated) => {
-            setProgress(updated);
-            setView({ name: 'results', summary });
+
+      case 'results':
+        return (
+          <Results
+            summary={view.summary}
+            onContinue={() =>
+              // Reload from the DB so Home reflects the latest persisted state.
+              loadProgress().then((p) => {
+                setProgress(p);
+                setView({ name: 'home' });
+              })
+            }
+          />
+        );
+
+      case 'profile':
+        return (
+          <Profile
+            progress={progress}
+            onBack={() => setView({ name: 'home' })}
+            onSynced={setProgress}
+          />
+        );
+
+      case 'roadmap':
+        return (
+          <Roadmap
+            progress={progress}
+            onBack={() => setView({ name: 'home' })}
+          />
+        );
+    }
+  })();
+
+  return (
+    <>
+      {screen}
+      {showSignIn && (
+        <SignInGate
+          onSynced={setProgress}
+          onDismiss={() => {
+            localStorage.setItem(SIGNIN_DISMISSED_KEY, '1');
+            setShowSignIn(false);
           }}
         />
-      );
-    }
-
-    case 'results':
-      return (
-        <Results
-          summary={view.summary}
-          onContinue={() =>
-            // Reload from the DB so Home reflects the latest persisted state.
-            loadProgress().then((p) => {
-              setProgress(p);
-              setView({ name: 'home' });
-            })
-          }
-        />
-      );
-
-    case 'profile':
-      return (
-        <Profile
-          progress={progress}
-          onBack={() => setView({ name: 'home' })}
-          onSynced={setProgress}
-        />
-      );
-
-    case 'roadmap':
-      return (
-        <Roadmap progress={progress} onBack={() => setView({ name: 'home' })} />
-      );
-  }
+      )}
+    </>
+  );
 }
 
 /** Branded launch screen shown while the first progress load resolves. */
