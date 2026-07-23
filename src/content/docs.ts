@@ -5,10 +5,9 @@ import { unitForExercise } from './index';
  * a lesson). Links are keyed by unit, so every exercise in a unit shows the
  * canonical docs for that topic — at least one relevant link each.
  *
- * NOTE: these point at ServiceNow's developer API reference and product docs.
- * They couldn't be live-verified from the build environment (egress blocks
- * servicenow.com), so if any link doesn't land on the right page it's a
- * one-line fix here.
+ * URLs use ServiceNow's version-agnostic docs short-links
+ * (www.servicenow.com/docs/r/...) so they track the current release, and were
+ * gathered from ServiceNow's own indexed documentation pages.
  */
 
 export interface DocLink {
@@ -16,125 +15,104 @@ export interface DocLink {
   url: string;
 }
 
-const API = 'https://developer.servicenow.com/dev.do#!/reference/api/xanadu';
+const R = 'https://www.servicenow.com/docs/r';
+
+const GLIDE_RECORD = {
+  title: 'GlideRecord — API reference',
+  url: `${R}/api-reference/server-api-reference/c_GlideRecordAPI.html`,
+};
+const GLIDE_SYSTEM = {
+  title: 'GlideSystem (gs) — API reference',
+  url: `${R}/api-reference/server-api-reference/c_GlideSystemScopedAPI.html`,
+};
+const GLIDE_AGGREGATE = {
+  title: 'GlideAggregate — API reference',
+  url: `${R}/api-reference/server-api-reference/c_GlideAggregateScopedAPI.html`,
+};
 
 export const UNIT_DOCS: Record<string, DocLink[]> = {
-  foundations: [
-    {
-      title: 'GlideSystem (gs) — API reference',
-      url: `${API}/server/no-namespace/c_GlideSystemScopedAPI`,
-    },
-  ],
-  'glide-record': [
-    {
-      title: 'GlideRecord — API reference',
-      url: `${API}/server/no-namespace/c_GlideRecordScopedAPI`,
-    },
-  ],
+  foundations: [GLIDE_SYSTEM],
+  'glide-record': [GLIDE_RECORD],
   'business-rules': [
     {
       title: 'Business rules — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_BusinessRules.html&version=latest',
+      url: `${R}/xanadu/application-development/business-rules-classic/c_BusinessRules.html`,
     },
-    {
-      title: 'GlideRecord (current / previous) — API reference',
-      url: `${API}/server/no-namespace/c_GlideRecordScopedAPI`,
-    },
+    GLIDE_RECORD,
   ],
   'client-scripts': [
     {
       title: 'GlideForm (g_form) — API reference',
-      url: `${API}/client/no-namespace/c_GlideFormAPI`,
+      url: `${R}/api-reference/c_GlideFormAPI.html`,
     },
     {
       title: 'Client scripts — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_ClientScripts.html&version=latest',
+      url: `${R}/yokohama/application-development/scripts/client-scripts.html`,
     },
   ],
   'script-includes': [
     {
       title: 'Script includes — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_ScriptInclude.html&version=latest',
+      url: `${R}/api-reference/scripts/c_ScriptIncludes.html`,
     },
   ],
   'glide-ajax': [
     {
       title: 'GlideAjax — API reference',
-      url: `${API}/client/no-namespace/c_GlideAjaxAPI`,
+      url: `${R}/api-reference/c_GlideAjaxAPI.html`,
     },
   ],
   'ui-policies-actions': [
     {
       title: 'UI policies — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_UIPolicy.html&version=latest',
-    },
-    {
-      title: 'UI actions — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_UIActions.html&version=latest',
+      url: `${R}/platform-administration/t_CreateAUIPolicy.html`,
     },
   ],
   'acls-security': [
     {
       title: 'Access control rules (ACLs) — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_AccessControl.html&version=latest',
+      url: `${R}/platform-security/access-control/t_CreateAnACLRule.html`,
     },
   ],
   'scheduled-jobs': [
     {
-      title: 'GlideSystem (eventQueue) — API reference',
-      url: `${API}/server/no-namespace/c_GlideSystemScopedAPI`,
+      title: 'Scheduled script execution — product docs',
+      url: `${R}/platform-administration/time-configuration/t_ScheduleAScriptExecution.html`,
     },
-    {
-      title: 'Scheduled jobs — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_ScheduledJobs.html&version=latest',
-    },
+    GLIDE_SYSTEM,
   ],
   notifications: [
     {
       title: 'Email notifications — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_EmailNotifications.html&version=latest',
+      url: `${R}/platform-administration/t_CreateANotification.html`,
     },
   ],
-  'glide-aggregate': [
-    {
-      title: 'GlideAggregate — API reference',
-      url: `${API}/server/no-namespace/c_GlideAggregateScopedAPI`,
-    },
-  ],
+  'glide-aggregate': [GLIDE_AGGREGATE],
   'rest-outbound': [
     {
       title: 'RESTMessageV2 — API reference',
-      url: `${API}/server/sn_ws-namespace/c_RESTMessageV2ScopedAPI`,
+      url: `${R}/api-reference/server-api-reference/c_RESTMessageV2API.html`,
     },
   ],
   'scripted-rest': [
     {
       title: 'Scripted REST APIs — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_ScriptedRESTAPIs.html&version=latest',
+      url: `${R}/api-reference/rest-api-explorer/t_CreateAScriptedRESTService.html`,
     },
   ],
   'import-transform': [
     {
       title: 'Transform maps — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=c_CreateATransformMap.html&version=latest',
+      url: `${R}/integrate-applications/system-import-sets/c_CreatingNewTransformMaps.html`,
     },
   ],
   'flow-designer': [
     {
       title: 'Flow Designer — product docs',
-      url: 'https://www.servicenow.com/docs/csh?topicname=flow-designer.html&version=latest',
+      url: `${R}/application-development/flow-designer.html`,
     },
   ],
-  'best-practices': [
-    {
-      title: 'Scripting technical best practices — developer guide',
-      url: 'https://developer.servicenow.com/dev.do#!/guides/xanadu/now-platform/tpb-guide/scripting_technical_best_practices',
-    },
-    {
-      title: 'GlideRecord — API reference',
-      url: `${API}/server/no-namespace/c_GlideRecordScopedAPI`,
-    },
-  ],
+  'best-practices': [GLIDE_RECORD, GLIDE_AGGREGATE],
 };
 
 /** Reference links for the unit that owns a given exercise (works in reviews). */
