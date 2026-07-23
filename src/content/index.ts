@@ -47,6 +47,11 @@ export function getUnit(unitId: string): Unit | undefined {
   return UNITS.find((u) => u.unitId === unitId);
 }
 
+/** The unit that owns a given exercise id (handles review-sampled exercises). */
+export function unitForExercise(exerciseId: string): Unit | undefined {
+  return UNITS.find((u) => u.exercises.some((e) => e.id === exerciseId));
+}
+
 export function badgeLabel(badgeId: string): string {
   const unit = UNITS.find(
     (u) => `${u.certTier.toLowerCase()}-${u.unitId}` === badgeId,

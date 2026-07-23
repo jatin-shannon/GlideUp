@@ -8,8 +8,10 @@ import {
   maybeAwardUnitBadge,
 } from '../lib/db';
 import { badgeLabel } from '../content';
+import { docsForExercise } from '../content/docs';
 import HeartsBar from '../components/HeartsBar';
 import ComboMeter from '../components/ComboMeter';
+import DocsFlyout from '../components/DocsFlyout';
 import ExerciseAssembly from '../components/ExerciseAssembly';
 import ExerciseFillBlank from '../components/ExerciseFillBlank';
 import ExerciseMultipleChoice from '../components/ExerciseMultipleChoice';
@@ -65,6 +67,7 @@ export default function Lesson({
   const [pos, setPos] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
+  const [showDocs, setShowDocs] = useState(false);
   // Bumped on Retry to remount the exercise with a fresh input.
   const [attempt, setAttempt] = useState(0);
 
@@ -80,6 +83,7 @@ export default function Lesson({
 
   const exercise = exercises[pos];
   const status = statuses[pos];
+  const docs = docsForExercise(exercise.id);
   const correctCount = statuses.filter((s) => s === 'correct').length;
   const allCorrect = correctCount === exercises.length;
   const outOfHearts = hearts <= 0;
@@ -226,14 +230,24 @@ export default function Lesson({
         <HeartsBar hearts={hearts} maxHearts={progress.maxHearts} />
       </div>
 
-      <div className="mb-3 flex min-h-[2rem] items-center justify-between">
+      <div className="mb-3 flex min-h-[2rem] items-center justify-between gap-2">
         <span className="text-xs uppercase tracking-wide text-slate-500">
           {unit.unitTitle} · {pos + 1}/{exercises.length}
           {remaining > 0 && (
             <span className="text-slate-600"> · {remaining} to answer</span>
           )}
         </span>
-        <ComboMeter combo={combo} />
+        <div className="flex items-center gap-2">
+          <ComboMeter combo={combo} />
+          {docs.length > 0 && (
+            <button
+              onClick={() => setShowDocs(true)}
+              className="flex items-center gap-1 rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold text-slate-300 transition hover:bg-slate-700"
+            >
+              📚 Reference
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Prompt + interaction */}
@@ -264,6 +278,17 @@ export default function Lesson({
             submitted={submitted}
             onCheck={handleCheck}
           />
+        )}
+
+        {/* Skip before answering — never costs a heart; come back to it later.
+            Hidden on the last unanswered question, where skipping can't help. */}
+        {status !== 'correct' && !feedback && remaining > 1 && (
+          <button
+            onClick={skip}
+            className="mx-auto mt-4 block text-sm font-semibold text-slate-500 transition hover:text-slate-300"
+          >
+            Skip for now →
+          </button>
         )}
       </div>
 
@@ -331,15 +356,21 @@ export default function Lesson({
               >
                 Retry
               </button>
-              <button
-                onClick={skip}
-                className="flex-1 rounded-xl bg-slate-800 py-3 font-bold text-slate-200 ring-1 ring-slate-600 transition hover:bg-slate-700"
-              >
-                Skip for now
-              </button>
+              {remaining > 1 && (
+                <button
+                  onClick={skip}
+                  className="flex-1 rounded-xl bg-slate-800 py-3 font-bold text-slate-200 ring-1 ring-slate-600 transition hover:bg-slate-700"
+                >
+                  Skip for now
+                </button>
+              )}
             </div>
           )}
         </div>
+      )}
+
+      {showDocs && (
+        <DocsFlyout links={docs} onClose={() => setShowDocs(false)} />
       )}
     </div>
   );
